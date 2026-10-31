@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sarah Fashion – Women’s Clothing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1c2250;--bg:#fbf8f6;--rose:#c2456b;--gold:#e9a23b;--line:#e4dcd8;--card:#fff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+h1,h2,h3,.logo{font-family:'Bodoni Moda',Georgia,serif}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-size:1.5rem;font-weight:700}
+.logo span{color:var(--rose)}
+nav{display:flex;gap:24px;font-weight:500}
+nav a:hover{color:var(--rose)}
+.cartbtn{background:var(--ink);color:#fff;border:0;border-radius:99px;padding:8px 18px;font-weight:500}
+.hero{background:var(--ink);color:#fff;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center;min-height:460px}
+.hero h1{font-size:clamp(2.4rem,6vw,4.4rem);line-height:1.05;font-weight:500}
+.hero p{margin:18px 0 28px;max-width:44ch;color:#d6d8ee}
+.btn{display:inline-block;background:var(--gold);color:var(--ink);border:0;padding:13px 28px;border-radius:4px;font-weight:700}
+.btn:hover{background:#f3b556}
+.art{height:400px;position:relative}
+.art i{position:absolute;border-radius:50% 50% 8px 8px}
+.art i:nth-child(1){width:200px;height:320px;background:var(--rose);left:5%;bottom:0}
+.art i:nth-child(2){width:180px;height:260px;background:var(--gold);left:42%;bottom:0;border-radius:90px 90px 8px 8px}
+.art i:nth-child(3){width:130px;height:190px;background:#8fa6e8;right:0;bottom:0}
+section{padding:64px 0}
+h2{font-size:2.2rem;font-weight:500;margin-bottom:8px}
+.sub{color:#5b6082;margin-bottom:24px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+.chip{background:transparent;border:1.5px solid var(--ink);color:var(--ink);padding:7px 18px;border-radius:99px;font-weight:500}
+.chip[aria-pressed=true]{background:var(--ink);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.pic{height:280px;display:flex;align-items:flex-end;justify-content:flex-start;padding:12px}
+.pic span{background:#fff;color:var(--ink);font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:99px}
+.info{padding:16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.info h3{font-size:1.15rem;font-weight:700}
+.info small{color:#5b6082}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:12px}
+.price{font-weight:700;font-size:1.1rem}
+.add{background:var(--rose);color:#fff;border:0;border-radius:4px;padding:8px 14px;font-weight:700}
+.add:hover{background:#a8345a}
+.about{background:#f1e6e2}
+.about .wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.perks{list-style:none;display:grid;gap:14px}
+.perks li{border-left:4px solid var(--gold);padding-left:14px}
+form.news{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+input{padding:12px 14px;border:1.5px solid var(--ink);border-radius:4px;font:inherit;min-width:240px;background:#fff}
+footer{background:var(--ink);color:#c9cce6;padding:36px 0;text-align:center;font-size:.9rem}
+#drawer{position:fixed;top:0;right:0;height:100%;width:min(380px,100%);background:#fff;z-index:40;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.2)}
+#drawer.open{transform:none}
+#drawer header{position:static;display:flex;justify-content:space-between;align-items:center;padding:16px 20px}
+#items{flex:1;overflow:auto;padding:16px 20px}
+.line{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
+.line button{background:none;border:1px solid var(--line);border-radius:4px;width:28px;height:28px}
+.qty{display:flex;align-items:center;gap:8px;margin-top:6px}
+.total{padding:20px;border-top:1px solid var(--line)}
+.total .btn{width:100%;margin-top:12px;border:0}
+#shade{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:30;display:none}
+#shade.open{display:block}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}
+#toast.show{opacity:1}
+@media(max-width:760px){nav{display:none}.hero .wrap,.about .wrap{grid-template-columns:1fr}.art{height:240px}.art i:nth-child(1){height:200px;width:130px}.art i:nth-child(2){height:160px;width:120px}.art i:nth-child(3){height:120px;width:90px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#top">Sarah <span>Fashion</span></a>
+    <nav><a href="#shop">Shop</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+    <button class="cartbtn" id="openCart">Cart (<span id="count">0</span>)</button>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Dress for the day you’re having.</h1>
+        <p>Kurtis, dresses, tops and co-ords cut for everyday life. New styles every week, free delivery over ₹1,999.</p>
+        <a class="btn" href="#shop">Shop new arrivals</a>
+      </div>
+      <div class="art" aria-hidden="true"><i></i><i></i><i></i></div>
+    </div>
+  </div>
+
+  <section id="shop">
+    <div class="wrap">
+      <h2>Shop the collection</h2>
+      <p class="sub">Pick a category to filter.</p>
+      <div class="chips" id="chips"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div>
+        <h2>Made to be worn, not kept for later.</h2>
+        <p>Sarah Fashion started with one idea: good clothes should feel easy. We pick soft fabrics, honest sizing and colors that work together, so getting dressed takes two minutes.</p>
+      </div>
+      <ul class="perks">
+        <li><strong>Free delivery</strong><br>On orders over ₹1,999.</li>
+        <li><strong>7-day easy returns</strong><br>Wrong size? Swap it, no questions.</li>
+        <li><strong>Cash on delivery</strong><br>Pay when your order arrives.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <h2>Get 10% off your first order</h2>
+      <p class="sub">Join our list for new drops and sale alerts.</p>
+      <form class="news" id="news">
+        <input type="email" id="email" placeholder="Your email address" aria-label="Email address" required>
+        <button class="btn" type="submit">Get my code</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Sarah Fashion. All rights reserved.</div>
+</footer>
+
+<div id="shade"></div>
+<aside id="drawer" aria-label="Shopping cart" aria-hidden="true">
+  <header><h3>Your cart</h3><button class="chip" id="closeCart">Close</button></header>
+  <div id="items"></div>
+  <div class="total">
+    <div class="row" style="padding:0"><span>Total</span><span class="price" id="total">₹0</span></div>
+    <button class="btn" id="checkout">Checkout</button>
+  </div>
+</aside>
+<div id="toast" role="status"></div>
+
+<script>
+const products=[
+ {id:1,name:"Floral Cotton Kurti",cat:"Kurtis",price:1299,color:"#c2456b",tag:"Bestseller"},
+ {id:2,name:"Straight Fit Kurti Set",cat:"Kurtis",price:1899,color:"#8fa6e8",tag:"New"},
+ {id:3,name:"Wrap Midi Dress",cat:"Dresses",price:2299,color:"#e9a23b",tag:"New"},
+ {id:4,name:"Linen Summer Dress",cat:"Dresses",price:1999,color:"#7fb59b",tag:"Sale"},
+ {id:5,name:"Ruffle Sleeve Top",cat:"Tops",price:799,color:"#d9a0b6",tag:"Bestseller"},
+ {id:6,name:"Ribbed Knit Top",cat:"Tops",price:699,color:"#1c2250",tag:"New"},
+ {id:7,name:"Printed Co-ord Set",cat:"Co-ords",price:2499,color:"#e07b5f",tag:"New"},
+ {id:8,name:"Pleated Pant Co-ord",cat:"Co-ords",price:2799,color:"#9a8fd1",tag:"Sale"}
+];
+const cats=["All",...new Set(products.map(p=>p.cat))];
+const fmt=n=>"₹"+n.toLocaleString("en-IN");
+let cart={},filter="All";
+const $=id=>document.getElementById(id);
+
+function renderChips(){
+  $("chips").innerHTML=cats.map(c=>`<button class="chip" aria-pressed="${c===filter}" data-c="${c}">${c}</button>`).join("");
+}
+function renderGrid(){
+  $("grid").innerHTML=products.filter(p=>filter==="All"||p.cat===filter).map(p=>`
+  <article class="card">
+    <div class="pic" style="background:${p.color}"><span>${p.tag}</span></div>
+    <div class="info"><h3>${p.name}</h3><small>${p.cat}</small>
+      <div class="row"><span class="price">${fmt(p.price)}</span><button class="add" data-id="${p.id}">Add to cart</button></div>
+    </div></article>`).join("");
+}
+function renderCart(){
+  const ids=Object.keys(cart);
+  let total=0,n=0;
+  $("items").innerHTML=ids.length?ids.map(id=>{
+    const p=products.find(x=>x.id==id),q=cart[id];total+=p.price*q;n+=q;
+    return `<div class="line"><div><strong>${p.name}</strong><div class="qty">
+      <button data-d="-1" data-id="${id}" aria-label="Decrease">−</button>${q}
+      <button data-d="1" data-id="${id}" aria-label="Increase">+</button></div></div>
+      <span class="price">${fmt(p.price*q)}</span></div>`}).join("")
+    :"<p>Your cart is empty. Add something you love.</p>";
+  $("count").textContent=n;$("total").textContent=fmt(total);
+}
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
+function drawer(open){
+  $("drawer").classList.toggle("open",open);$("shade").classList.toggle("open",open);
+  $("drawer").setAttribute("aria-hidden",!open);
+}
+$("chips").onclick=e=>{const c=e.target.dataset.c;if(c){filter=c;renderChips();renderGrid()}};
+$("grid").onclick=e=>{const id=e.target.dataset.id;if(id){cart[id]=(cart[id]||0)+1;renderCart();toast("Added to cart")}};
+$("items").onclick=e=>{
+  const id=e.target.dataset.id,d=+e.target.dataset.d;
+  if(id&&d){cart[id]+=d;if(cart[id]<1)delete cart[id];renderCart()}
+};
+$("openCart").onclick=()=>drawer(true);
+$("closeCart").onclick=$("shade").onclick=()=>drawer(false);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")drawer(false)});
+$("checkout").onclick=()=>{
+  if(!Object.keys(cart).length)return toast("Your cart is empty");
+  cart={};renderCart();drawer(false);toast("Order placed. Thank you!");
+};
+$("news").onsubmit=e=>{e.preventDefault();$("email").value="";toast("Check your inbox for your 10% code")};
+renderChips();renderGrid();renderCart();
+</script>
+</body>
+</html>
